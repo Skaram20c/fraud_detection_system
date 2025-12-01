@@ -1,0 +1,29 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environments
+venv/
+env/
+
+# Environment variables
+.env
+.env.*
+
+# IDE folders
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+
+# Database / sensitive files
+*.db
+*.sqlite
+*.sql
+
+# Compiled / generated
+*.log
+*.zip
+*.xlsx
+*.docx
