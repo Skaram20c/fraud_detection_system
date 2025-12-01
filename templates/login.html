@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investigator Login</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #F5F6FA;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            width: 420px;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0px 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .login-box h2 {
+            margin: 0 0 25px 0;
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: #0A1F44;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0A1F44;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            outline: none;
+            font-size: 15px;
+            transition: 0.3s ease;
+        }
+
+        .input-group input:focus {
+            border-color: #0A1F44;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            background: #0A1F44;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background: #153568;
+        }
+
+        .signup-link {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .signup-link a {
+            color: #0A1F44;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="login-box">
+        <h2>Investigator Login</h2>
+
+        <form method="POST" action="/login">
+
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" name="password" required>
+            </div>
+
+            <button class="btn-submit">Login</button>
+
+        </form>
+
+        <div class="signup-link">
+            Don't have an account? <a href="/signup">Create one</a>
+        </div>
+    </div>
+
+</body>
+</html>

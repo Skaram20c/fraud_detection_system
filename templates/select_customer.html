@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Customer</title>
+    <style>
+        body {
+            font-family: Inter, sans-serif;
+            background: #f3f6fb;
+            padding: 60px;
+        }
+        .card {
+            width: 420px;
+            margin: auto;
+            background: #fff;
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        .title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 10px;
+            border: 1px solid #d1d5db;
+        }
+        .btn-outline {
+            margin-top: 16px;
+            width: 100%;
+            padding: 12px;
+            background-color: #0A1F44;
+            color: #eef0f2;
+            border: 2px solid #0A1F44;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .error {
+            color: red;
+            margin-top: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="title">Enter Customer Details</div>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST">
+        <label>Customer ID</label>
+        <input type="number" name="customer_id" required placeholder="Enter Customer ID">
+
+        <label>First Name</label>
+        <input type="text" name="first_name" required placeholder="Enter First Name">
+
+        <label>Last Name</label>
+        <input type="text" name="last_name" required placeholder="Enter Last Name">
+
+        <label>Phone </label>
+        <input type="text" name="phone" required placeholder="e.g., 705-988-5534">
+
+        <label>City</label>
+        <input type="text" name="city" required placeholder="Enter City">
+
+        <button class="btn-outline" type="submit">Verify & Continue</button>
+    </form>
+
+
+
+</div>
+
+</body>
+</html>
