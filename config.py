@@ -1,5 +1,5 @@
 MYSQL_HOST = "localhost"
 MYSQL_USER = "root"
-MYSQL_PASSWORD = "###########@123"
+MYSQL_PASSWORD = "W@heguru2013"
 MYSQL_DATABASE = "FraudDetectionDB"
-SECRET_KEY = "secret_key"
+SECRET_KEY = "secret"

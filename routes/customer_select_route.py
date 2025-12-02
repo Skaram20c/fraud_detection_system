@@ -29,5 +29,3 @@ def select_customer():
         return redirect(url_for('dashboard_route.dashboard'))
 
     return render_template("select_customer.html")
-
-from flask import session, redirect, url_for, flash

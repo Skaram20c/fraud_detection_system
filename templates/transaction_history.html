@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transaction History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- TOP NAV (can copy from dashboard if needed) -->
+    <div class="top-nav">
+        <div class="nav-left">
+            <div class="back-btn" onclick="window.history.back()">
+                <span>←</span>
+            </div>
+
+            <div class="brand">
+                <div class="brand-logo">FD</div>
+                <div class="brand-name">Fraud Detection System</div>
+            </div>
+        </div>
+
+        <div class="nav-right">
+            <div class="profile-chip">
+                <div class="avatar">{{ investigator_initials }}</div>
+
+                <div class="profile-info">
+                    <div class="profile-name">{{ investigator_name }}</div>
+                    <div class="profile-role">Investigator</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>Transaction History</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Transaction ID</th>
+                <th>Status</th>
+                <th>Amount</th>
+                <th>Flagged</th>
+                <th>Reason</th>
+                <th>Alert ID</th>
+                <th>Alert Notes</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for row in transactions %}
+            <tr>
+                <td>{{ row.transaction_id }}</td>
+                <td>{{ row.status }}</td>
+
+                <td class="{{ 'amount-neg' if row.amount < 0 else 'amount-pos' }}">
+                    {{ row.amount }}
+                </td>
+
+                <td>
+                    {% if row.flagged %}
+                    <span class="tag tag-danger">Yes</span>
+                    {% else %}
+                    <span class="tag tag-success">No</span>
+                    {% endif %}
+                </td>
+
+                <td>{{ row.flag_reason or '-' }}</td>
+                <td>{{ row.alert_id or '-' }}</td>
+                <td>{{ row.alert_notes or '-' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

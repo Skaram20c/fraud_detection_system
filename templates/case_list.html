@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cases</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+
+<div class="app-shell">
+
+    <!-- TOP NAV -->
+    <div class="top-nav">
+        <div class="nav-left">
+            <div class="back-btn" onclick="window.history.back()">
+                <span>←</span>
+            </div>
+
+            <div class="brand">
+                <div class="brand-logo">FD</div>
+                <div class="brand-name">Fraud Detection System</div>
+            </div>
+        </div>
+
+        <div class="nav-right">
+            <div class="profile-chip">
+                <div class="avatar">{{ investigator_initials }}</div>
+                <div class="profile-info">
+                    <span class="profile-name">{{ investigator_name }}</span>
+                    <span class="profile-role">Investigator</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>Cases Assigned</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Alert ID</th>
+                <th>Customer</th>
+                <th>Transaction ID</th>
+                <th>Amount</th>
+                <th>Risk</th>
+                <th>Flag Reason</th>
+                <th>Alert Notes</th>
+                <th>View</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for c in cases %}
+            <tr>
+                <td>{{ c.transaction_date.strftime('%Y-%m-%d') if c.transaction_date else '-' }}</td>
+                <td>{{ c.alert_id }}</td>
+                <td>{{ c.customer_name }}</td>
+                <td>{{ c.transaction_id }}</td>
+
+                <td class="{{ 'amount-neg' if c.amount < 0 else 'amount-pos' }}">
+                    ${{ c.amount }}
+                </td>
+
+                <td>
+                    {% if c.risk_level == 'High' %}
+                        <span class="tag tag-danger">{{ c.risk_level }}</span>
+                    {% elif c.risk_level == 'Medium' %}
+                        <span class="tag tag-warning">{{ c.risk_level }}</span>
+                    {% else %}
+                        <span class="tag tag-success">{{ c.risk_level }}</span>
+                    {% endif %}
+                </td>
+
+                <td>{{ c.flag_reason or '-' }}</td>
+                <td>{{ c.alert_notes or '-' }}</td>
+
+                <td>
+                    <a class="see-more" href="/case/{{ c.alert_id }}">View</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

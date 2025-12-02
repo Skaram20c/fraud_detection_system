@@ -165,10 +165,3 @@ class DashboardController:
         self.cursor.execute(query, (customer_id,))
         row = self.cursor.fetchone()
         return row["count_success_flagged"] or 0
-
-
-
-
-
-
-

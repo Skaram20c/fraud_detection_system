@@ -32,4 +32,7 @@ def dashboard():
                            tx_counts=transaction_counts,
                            flagged_count=flagged_count,
                            fraud_alert_total=fraud_alert_total,
-                           successful_flagged=successful_flagged)
+                           successful_flagged=successful_flagged,
+                           investigator_name=session.get('investigator_name'),
+                           investigator_initials=session.get('investigator_initials'),
+                           investigator_id=session.get('investigator_id'),)

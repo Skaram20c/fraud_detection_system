@@ -134,6 +134,53 @@
             gap: 12px;
         }
 
+        .search-input {
+            width: 260px;
+            padding: 8px 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+            font-size: 14px;
+        }
+
+        .search-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .search-dropdown {
+            position: absolute;
+            top: 42px; /* position below input */
+            left: 0;
+            width: 100%;
+            background: white;
+            max-height: 240px;
+            overflow-y: auto;
+            border-radius: 10px;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            display: none;
+            z-index: 2000;
+        }
+
+
+        .search-item {
+            padding: 10px 14px;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        .search-item:hover {
+            background: #f3f4f6;
+        }
+        .search-type {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        .search-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+
         .customer-account-dropdown {
             position: relative;
             display: inline-block;
@@ -149,6 +196,41 @@
             font-size: 0.7rem;
             margin-left: 4px;
         }
+
+        #alertDropdown {
+            position: absolute;
+            top: 45px;
+            right: 90px;
+            min-width: 260px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.16);
+            border: 1px solid var(--border-light);
+            display: none;
+            z-index: 1000;
+        }
+
+        .alert-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border-light);
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .alert-item:hover {
+            background: var(--bg-soft);
+        }
+
+        .alert-title {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .alert-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
 
         .dropdown-menu {
             position: absolute;
@@ -667,9 +749,9 @@
             </div>
 
             <div class="brand">
-                <div class="brand-logo">N</div>
+                <div class="brand-logo">FD</div>
                 <div>
-                    <div class="brand-name">NevBank</div>
+                    <div class="brand-name">Fraud Detection</div>
                 </div>
             </div>
 
@@ -689,24 +771,51 @@
                     </div>
                 </div>
 
-
-                <div class="nav-tab">Transactions</div>
-                <div class="nav-tab">Cards</div>
-                <div class="nav-tab">Offers</div>
-                <div class="nav-tab">Investments</div>
+                <!-- Transactions button -->
+                <button id="txHistoryBtn" class="btn-outline">Transactions</button>
+                <button id="casesBtn" class="btn-outline">Cases</button>
+                <div class="search-wrapper">
+                    <input 
+                        type="text" 
+                        id="globalSearchInput" 
+                        class="search-input" 
+                        placeholder="Search customers, transactions..."
+                    >
+                    <div id="globalSearchResults" class="search-dropdown"></div>
+                </div>
             </nav>
         </div>
 
         <div class="nav-right">
             <div class="icon-pill">?</div>
-            <div class="icon-pill">&#128276;</div>
-            <div class="profile-chip">
-                <div class="avatar">KS</div>
-                <div class="profile-info">
-                    <span class="profile-name">{{ customer.first_name }} {{ customer.last_name }}</span>
-                    <span class="profile-role">{{ customer.city }}</span>
+            <div class="icon-pill" id="alertBell">&#128276;</div>
+
+            <div class="dropdown-menu" id="alertDropdown">
+                <div class="dropdown-header">
+                    Alerts
+                </div>
+                <div id="alertList">
+                    <!-- Alerts load via JS -->
+                    <div class="dropdown-item">Loading...</div>
                 </div>
             </div>
+
+            <div class="profile-chip">
+                <div class="avatar">
+                    {{ investigator_initials }}
+                </div>
+
+                <div class="profile-info">
+                    <span class="profile-name">
+                        {{ investigator_name }}
+                    </span>
+
+                    <span class="profile-role">
+                        ID: {{ investigator_id }}
+                    </span>
+                </div>
+            </div>
+
         </div>
     </header>
 
