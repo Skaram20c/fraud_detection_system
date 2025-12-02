@@ -6,6 +6,7 @@ from routes.alert_route import alert_route
 from routes.search_route import search_route
 from routes.dashboard_route import dashboard_route
 from routes.transaction_route import transaction_route
+from routes.query_builder_route import query_builder_route
 from routes.customer_select_route import customer_select_route
 
 
@@ -20,12 +21,16 @@ app.register_blueprint(transaction_route)
 app.register_blueprint(case_route)
 app.register_blueprint(alert_route)
 app.register_blueprint(search_route)
-
-
+app.register_blueprint(query_builder_route)
 
 @app.route('/')
 def mainpage():
     return render_template('mainpage.html')
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('auth_routes.login'))
 
 if __name__ == "__main__":
     app.run(debug=True)

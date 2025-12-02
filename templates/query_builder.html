@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Advanced Query Builder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+    <style>
+        body {
+            background: var(--bg-main);
+            font-family: 'Inter';
+        }
+
+        .qb-container {
+            margin: 30px auto;
+            max-width: 1100px;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(15,23,42,0.08);
+        }
+
+        .qb-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .qb-section {
+            margin-bottom: 25px;
+        }
+
+        .qb-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        select, input {
+            padding: 8px 10px;
+            border-radius: 10px;
+            border: 1px solid var(--border-light);
+            width: 200px;
+        }
+
+        .qb-btn {
+            background: var(--bg-accent);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .qb-btn:hover {
+            background: #0a2466;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        thead {
+            background: var(--bg-soft);
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="qb-container">
+
+    <div class="qb-title">Advanced Query Builder</div>
+
+    <!-- TABLE SELECTION -->
+    <div class="qb-section">
+        <label><b>Select Table:</b></label>
+        <select id="tableSelect">
+            <option value="">-- Select --</option>
+            {% for t in tables %}
+                <option value="{{ t }}">{{ t }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- FILTERS -->
+    <div id="filtersArea"></div>
+
+    <button class="qb-btn" onclick="addFilter()">+ Add Filter</button>
+    <button class="qb-btn" onclick="runQuery()">Run Query</button>
+
+    <!-- RESULTS -->
+    <div class="qb-section">
+        <h3>Results</h3>
+        <table id="resultsTable"></table>
+    </div>
+
+</div>
+
+<script>
+document.getElementById("tableSelect").addEventListener("change", async function() {
+    const table = this.value;
+    const res = await fetch(`/api/query-columns?table=${table}`);
+    const columns = await res.json();
+
+    // Update all filter rows to show correct columns
+    document.querySelectorAll(".columnSelect").forEach(sel => {
+        sel.innerHTML = columns.map(c => `<option value="${c}">${c}</option>`).join("");
+    });
+});
+
+function addFilter() {
+    const div = document.createElement("div");
+    div.classList.add("qb-row");
+
+    div.innerHTML = `
+        <select class="columnSelect">
+            <option>Select Column</option>
+        </select>
+
+        <select class="operatorSelect">
+            <option value="=">=</option>
+            <option value=">">></option>
+            <option value="<"><</option>
+            <option value="contains">Contains</option>
+            <option value="startswith">Starts With</option>
+            <option value="endswith">Ends With</option>
+        </select>
+
+        <input type="text" class="valueInput" placeholder="Value">
+
+        <button class="qb-btn" onclick="this.parentElement.remove()">Remove</button>
+    `;
+
+    document.getElementById("filtersArea").appendChild(div);
+}
+
+async function runQuery() {
+    const table = document.getElementById("tableSelect").value;
+    if (!table) return alert("Select a table first!");
+
+    const filterRows = document.querySelectorAll(".qb-row");
+
+    const filters = [...filterRows].map(r => ({
+        column: r.querySelector(".columnSelect").value,
+        operator: r.querySelector(".operatorSelect").value,
+        value: r.querySelector(".valueInput").value
+    }));
+
+    const res = await fetch("/api/run-query", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ table, filters })
+    });
+
+    const data = await res.json();
+
+    let tableHtml = "";
+
+    if (data.length > 0) {
+        const keys = Object.keys(data[0]);
+        tableHtml += "<thead><tr>" + keys.map(k => `<th>${k}</th>`).join("") + "</tr></thead>";
+
+        tableHtml += "<tbody>";
+        data.forEach(row => {
+            tableHtml += "<tr>" +
+                keys.map(k => `<td>${row[k]}</td>`).join("") +
+                "</tr>";
+        });
+        tableHtml += "</tbody>";
+    } else {
+        tableHtml = "<tr><td>No results found</td></tr>";
+    }
+
+    document.getElementById("resultsTable").innerHTML = tableHtml;
+}
+</script>
+
+</body>
+</html>

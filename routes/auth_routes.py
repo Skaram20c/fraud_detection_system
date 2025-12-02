@@ -46,3 +46,4 @@ def login():
         return redirect(url_for('customer_select_route.select_customer'))
 
     return render_template("login.html")
+

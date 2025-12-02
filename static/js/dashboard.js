@@ -162,5 +162,21 @@ document.getElementById("queryBuilderBtn").addEventListener("click", () => {
     window.open("/query-builder", "_blank"); // opens in NEW page
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    const profileBtn = document.getElementById("profileBtn");
+    const profileMenu = document.getElementById("profileMenu");
+
+    if (!profileBtn || !profileMenu) return;
+
+    profileBtn.addEventListener("click", function(e) {
+        e.stopPropagation();
+        profileMenu.classList.toggle("open");
+    });
+
+    document.addEventListener("click", function() {
+        profileMenu.classList.remove("open");
+    });
+});
+
 
 

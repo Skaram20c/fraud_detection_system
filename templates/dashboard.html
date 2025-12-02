@@ -704,6 +704,32 @@
             background: #f1f5fb;
         }
 
+        #profileMenu {
+            position: absolute;
+            right: 0;
+            margin-top: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            width: 160px;
+            display: none;
+            box-shadow: 0 10px 30px rgba(15,23,42,0.15);
+            z-index: 1000;
+        }
+
+        #profileMenu.open {
+            display: block;
+        }
+
+        #profileMenu .dropdown-item {
+            padding: 10px 16px;
+            cursor: pointer;
+        }
+
+        #profileMenu .dropdown-item:hover {
+            background: var(--bg-soft);
+        }
+
 
         .tx-menu div {
             padding: 6px 10px;
@@ -744,7 +770,7 @@
     <!-- TOP NAV -->
     <header class="top-nav">
         <div class="nav-left">
-            <div class="back-btn">
+            <div class="back-btn" onclick="window.location='/select-customer'">
                 <span>&larr;</span>
             </div>
 
@@ -815,6 +841,9 @@
                     </span>
                 </div>
             </div>
+            <div class="dropdown-menu" id="profileMenu">
+                <div class="dropdown-item" onclick="window.location='/logout'">Sign Out</div>
+            </div>
 
         </div>
     </header>
@@ -828,7 +857,6 @@
                     <div class="card-title">{{ main_account.account_type }} – {{ customer.first_name }} {{ customer.last_name }}</div>
                     <div class="card-subtitle">{{ main_account.account_type }} Account</div>
                 </div>
-                <button class="btn-outline">Transfer money</button>
             </div>
 
             <div class="account-details">
@@ -873,15 +901,11 @@
 
         <!-- RIGHT STANDING ORDERS CARD -->
         <div class="standing-orders-card">
-            <div class="standing-badge">
-                &#128197; Upcoming payments
-            </div>
-            <div class="standing-title">Define standing orders</div>
+            <div class="standing-title">Flagged Transactions Overview</div>
             <div class="standing-text">
-                We help you remember about recurring payments for that final date.
-                Define standing orders and we’ll take care of your regular transfers.
+                A Transaction that seems suspicious to the system.
+                It can either be approved by the system or the assigned investigator.
             </div>
-            <button class="btn-outline">Define standing order</button>
         </div>
     </section>
 
@@ -956,7 +980,6 @@
                 {{ successful_flagged }}
             </div>
         </div>
-
     </section>
 
 
@@ -1154,7 +1177,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
