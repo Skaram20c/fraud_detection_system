@@ -10,26 +10,42 @@
 
     <h2>Search Results for "{{ q }}"</h2>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Type</th>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Subtitle</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for r in results %}
-            <tr>
-                <td>{{ r.type }}</td>
-                <td>{{ r.id }}</td>
-                <td>{{ r.title }}</td>
-                <td>{{ r.subtitle }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        {% if results %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>ID</th>
+                    <th>Match</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for r in results %}
+                <tr>
+                    <td>{{ r.type | capitalize }}</td>
+                    <td>{{ r.id }}</td>
+                    <td>{{ r.title }}</td>
+                    <td>
+                        {% if r.type == 'customer' %}
+                            <a href="/customer/{{ r.id }}" class="see-more">View</a>
+                        {% elif r.type == 'account' %}
+                            <a href="/account/{{ r.id }}" class="see-more">View</a>
+                        {% elif r.type == 'transaction' %}
+                            <a href="/transaction/{{ r.id }}" class="see-more">View</a>
+                        {% elif r.type == 'alert' %}
+                            <a href="/case/{{ r.id }}" class="see-more">View</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No results found.</p>
+        {% endif %}
+
 
 </div>
 

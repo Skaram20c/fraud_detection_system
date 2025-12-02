@@ -32,5 +32,10 @@ class Customer:
         """
         self.cursor.execute(query, (customer_id, first_name, last_name, phone, city))
         return self.cursor.fetchone()
+    
+    def find_by_id(self, customer_id):
+        self.cursor.execute("SELECT * FROM Customer WHERE customer_id = %s", (customer_id,))
+        result = self.cursor.fetchone()
+        return result
 
 

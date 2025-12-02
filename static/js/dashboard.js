@@ -133,8 +133,16 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             data.forEach(item => {
+                let action = "";
+
+                if (item.type === "customer") {
+                    action = `/switch-customer/${item.id}`;
+                } else {
+                    action = `/search?q=${encodeURIComponent(item.id)}&type=${item.type}`;
+                }
+
                 box.innerHTML += `
-                    <div class="search-item" onclick="window.location='/search?q=${item.title}'">
+                    <div class="search-item" onclick="window.location='${action}'">
                         <div class="search-title">${item.title}</div>
                         <div class="search-type">${item.type} — ${item.subtitle}</div>
                     </div>
@@ -149,5 +157,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 });
+
+document.getElementById("queryBuilderBtn").addEventListener("click", () => {
+    window.open("/query-builder", "_blank"); // opens in NEW page
+});
+
 
 

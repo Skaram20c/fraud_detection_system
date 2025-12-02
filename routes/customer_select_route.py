@@ -29,3 +29,20 @@ def select_customer():
         return redirect(url_for('dashboard_route.dashboard'))
 
     return render_template("select_customer.html")
+
+@customer_select_route.route('/switch-customer/<int:customer_id>')
+def switch_customer(customer_id):
+
+    # Fetch customer details from DB
+    customer_controller = CustomerController()
+    customer = customer_controller.find_by_id(customer_id)
+
+    if not customer:
+        return "Customer not found", 404
+
+    # Update session
+    session['customer_id'] = customer['customer_id']
+    session['customer_name'] = f"{customer['first_name']} {customer['last_name']}"
+    session['customer_city'] = customer['city']
+
+    return redirect(url_for('dashboard_route.dashboard'))
