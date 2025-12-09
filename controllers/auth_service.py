@@ -10,15 +10,10 @@ class AuthService:
 
         investigator = Investigator()
 
-        # Check if email already exists
         if investigator.find_by_email(email):
             return False, "Email already registered."
 
-        # Hash the password
-        # password_hash = generate_password_hash(password)
-
-        # Insert new investigator
-        investigator.create(name, email, password_hash)
+        investigator.create(name, email, password)
 
         return True, "Signup successful!"
 

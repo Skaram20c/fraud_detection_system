@@ -11,10 +11,7 @@ class Investigator:
         return self.cursor.fetchone()
 
     def create(self, name, email, password):
-        query = """
-            INSERT INTO Investigator (name, email, password)
-            VALUES (%s, %s, %s, %s)
-        """
+        query = "CALL sp_create_investigator(%s, %s, %s)"
         self.cursor.execute(query, (name, email, password))
         self.db.commit()
         return True
